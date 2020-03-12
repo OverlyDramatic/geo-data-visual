@@ -20,6 +20,7 @@ function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({ width: 800,
     height: 600,
+    title: '未爆炸物探测数据可视化系统',
     webPreferences: {
       nodeIntegration: true
     } })
