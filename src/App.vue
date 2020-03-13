@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1 class="home_title">未爆炸物探测数据可视化系统</h1>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -19,6 +18,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 </style>
