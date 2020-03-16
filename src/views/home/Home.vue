@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
+  <div class="home" ref="home_screen">
     <div>
-      <img src="../../assets/logo.png" />
+      <img draggable="false" src="../../assets/logo.png" />
     </div>
     <h1 class="home_title">未爆炸物探测数据可视化系统</h1>
     <div class="welcome_container">
@@ -15,7 +15,7 @@
         </div>
         <div>
           <!-- TODO 打开工程 -->
-          <el-button class="home_btn" type="text">
+          <el-button class="home_btn" type="text" @click="openFile">
             <i class="el-icon-s-order"></i>
             打开工程
           </el-button>
@@ -23,9 +23,13 @@
             <!-- TODO 最近打开 -->
             <el-divider>最近打开</el-divider>
             <ul class="recent_list">
-              <li class="recent_list_item" v-for="item in testRecentData.filter((item, index) => {
-                return index < 3
-                })" :key="item.id">
+              <li
+                class="recent_list_item"
+                v-for="item in testRecentData.filter((item, index) => {
+                  return index < 3
+                })"
+                :key="item.id"
+              >
                 <span class="recent_open_name" v-text="item.name"></span>
                 <span class="recent_open_path" v-text="item.path"></span>
               </li>
@@ -48,11 +52,9 @@
 </template>
 
 <script>
-import { remote } from 'electron'
-
 export default {
   name: 'home',
-  data () {
+  data() {
     return {
       testRecentData: [
         {
@@ -75,9 +77,52 @@ export default {
   },
   methods: {
     // 点击关闭按钮
-    colseWindow () {
-      remote.app.quit()
+    colseWindow() {
+      const { app } = require('electron').remote
+      app.quit()
+    },
+    // 打开文件
+    openFile() {
+      const { fileUpload } = require('../../components/js/upload.js')
+      fileUpload({
+        formatLimit: 'application/json'
+      }).then(
+        res => {
+          // 读取成功
+          this.$message.success(`打开 ${res.name}工程`)
+          let reader = new FileReader()
+          reader.onload = e => {
+            console.log(e.target.result)
+          }
+          reader.readAsText(res)
+        },
+        // 失败报错
+        rej => {
+          this.$message.error(rej.data)
+        }
+      )
     }
+  },
+  mounted() {
+    const { dropFile } = require('../../components/js/dragFile.js')
+    const homeScreen = this.$refs.home_screen
+    // 在home_screen添加文件拖拽监听事件
+    dropFile(homeScreen, {
+      formatLimit: ['json']
+    }).then(
+      res => {
+        // 读取成功
+        this.$message.success(`打开 ${res.name}工程`)
+        let reader = new FileReader()
+        reader.onload = e => {
+          console.log(e.target.result)
+        }
+        reader.readAsText(res)
+      },
+      rej => {
+        this.$message.error(rej.message)
+      }
+    )
   }
 }
 </script>
@@ -122,7 +167,7 @@ export default {
 }
 .recent_list_item:hover .recent_open_name,
 .recent_list_item:hover .recent_open_path {
-  color: #409EFF;
+  color: #409eff;
   text-decoration: underline;
   cursor: pointer;
 }
