@@ -8,7 +8,7 @@
       <section class="welcome_page start">
         <div>
           <!-- TODO 新建工程 -->
-          <el-button class="home_btn" type="text">
+          <el-button class="home_btn" type="text" @click="newProject">
             <i class="el-icon-plus"></i>
             新建工程
           </el-button>
@@ -81,7 +81,13 @@ export default {
       const { app } = require('electron').remote
       app.quit()
     },
-    // 打开文件
+    // 新建工程
+    newProject() {
+      this.$router.push({
+        name: 'newProject'
+      })
+    },
+    // 打开工程
     openFile() {
       const { fileUpload } = require('../../components/js/upload.js')
       fileUpload({
@@ -97,7 +103,7 @@ export default {
         }
       )
     },
-    // 打开文件成功后跳转工程详情页面
+    // 打开工程成功后跳转工程详情页面
     openSuccess(file) {
       this.$message.success(`打开 ${file.name}工程`)
       let reader = new FileReader()
@@ -106,7 +112,7 @@ export default {
       }
       reader.readAsText(file)
     },
-    // 打开文件失败后提示错误信息
+    // 打开工程失败后提示错误信息
     openFail(error) {
       this.$message.error(error.message)
     }
@@ -125,8 +131,10 @@ export default {
 }
 </script>
 <style>
+.home {
+  margin-top: 30px;
+}
 .home_title {
-  user-select: none;
   font-size: 36px;
   margin: 0;
 }
