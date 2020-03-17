@@ -89,18 +89,26 @@ export default {
       }).then(
         res => {
           // 读取成功
-          this.$message.success(`打开 ${res.name}工程`)
-          let reader = new FileReader()
-          reader.onload = e => {
-            console.log(e.target.result)
-          }
-          reader.readAsText(res)
+          this.openSuccess(res)
         },
         // 失败报错
         rej => {
-          this.$message.error(rej.data)
+          this.openFail(rej)
         }
       )
+    },
+    // 打开文件成功后跳转工程详情页面
+    openSuccess(file) {
+      this.$message.success(`打开 ${file.name}工程`)
+      let reader = new FileReader()
+      reader.onload = e => {
+        console.log(e.target.result)
+      }
+      reader.readAsText(file)
+    },
+    // 打开文件失败后提示错误信息
+    openFail(error) {
+      this.$message.error(error.message)
     }
   },
   mounted() {
@@ -109,20 +117,10 @@ export default {
     // 在home_screen添加文件拖拽监听事件
     dropFile(homeScreen, {
       formatLimit: ['json']
-    }).then(
-      res => {
-        // 读取成功
-        this.$message.success(`打开 ${res.name}工程`)
-        let reader = new FileReader()
-        reader.onload = e => {
-          console.log(e.target.result)
-        }
-        reader.readAsText(res)
-      },
-      rej => {
-        this.$message.error(rej.message)
-      }
-    )
+    }, {
+      resolve: this.openSuccess,
+      reject: this.openFail
+    })
   }
 }
 </script>

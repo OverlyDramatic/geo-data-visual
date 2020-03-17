@@ -38,7 +38,7 @@ function onFileChange(config, inputFile, res) {
   if (sufList.indexOf(getSuffix(inputFile.files[0].name)) === -1) {
     res.reject({
       type: 'formatError',
-      data: `上传文件格式不符合要求`
+      message: `上传文件格式不符合要求`
     })
   }
   res.resolve(inputFile.files[0])
