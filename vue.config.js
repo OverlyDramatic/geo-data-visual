@@ -1,4 +1,9 @@
 module.exports = {
+  configureWebpack: {
+    // vscode debug
+    devtool: 'source-map'
+  },
+  // 插件选项
   pluginOptions: {
     electronBuilder: {
       builderOptions: {
