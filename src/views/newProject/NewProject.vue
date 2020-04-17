@@ -1,6 +1,6 @@
 <template>
   <div class="new_project_wrap">
-    <h1>新建工程</h1>
+    <h1><i class="el-icon-edit"></i>新建工程</h1>
     <el-form class="new_project_form" ref="newPForm" :model="formData" label-width="150px">
       <!-- TODO 请输入项目名 -->
       <el-form-item label="项目名称">
@@ -26,11 +26,38 @@
       </el-form-item>
       <!-- TODO 请输入项目地址 -->
       <el-form-item label="项目地址">
-        <el-input v-model="formData.organization" prefix-icon="el-icon-s-home"></el-input>
+        <el-input v-model="formData.address" prefix-icon="el-icon-s-home"></el-input>
       </el-form-item>
-      <!-- TODO 探测方式 -->
-      <!-- TODO 探测目标 -->
+      <!-- TODO 探测方式 单选 航空、地面 -->
+      <el-form-item label="探测方式">
+        <el-radio v-model="formData.detectMethod" label="1"><i class="el-icon-truck"></i>地面</el-radio>
+        <el-radio v-model="formData.detectMethod" label="2"><i class="el-icon-s-promotion"></i>航空</el-radio>
+        <el-radio v-model="formData.detectMethod" label="3"><i class="el-icon-ship"></i>水面</el-radio>
+      </el-form-item>
+      <!-- TODO 探测目标 多选 地雷、炮弹、简易爆炸装置、集束炸弹 -->
+      <el-form-item label="探测目标">
+        <el-checkbox-group v-model="formData.detectObjects">
+          <el-checkbox label="1">地雷</el-checkbox>
+          <el-checkbox label="2">炮弹</el-checkbox>
+          <el-checkbox label="3">简易爆炸装置</el-checkbox>
+          <el-checkbox label="4">集束炸弹</el-checkbox>
+          <el-checkbox label="5">其他</el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
       <!-- TODO 请输入项目简介 -->
+      <el-form-item label="项目简介">
+        <el-input
+          type="textarea"
+          :rows="2"
+          placeholder="请输入内容"
+          v-model="formData.description">
+        </el-input>
+      </el-form-item>
+      <!-- TODO 按钮 -->
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button @click="$router.back()">取消</el-button>
+      </el-form-item>
     </el-form>
     <!-- 地图组件 -->
     <el-amap
@@ -58,7 +85,11 @@ export default {
         projectName: '',
         author: '',
         dateRange: '',
-        organization: ''
+        organization: '',
+        address: '',
+        detectMethod: '', // 探测方式 1-地面 2-航空
+        detectObjects: [],
+        description: '' // 项目描述
       },
       // 高德地图组件
       AmapManager,
@@ -96,6 +127,9 @@ export default {
     getDistrict(param) {
       const { getDistrict } = require('../../api/district.js')
       getDistrict(param)
+    },
+    onSubmit() {
+      console.log('hello?')
     }
   },
   mounted() {
