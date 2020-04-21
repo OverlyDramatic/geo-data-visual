@@ -10,7 +10,8 @@ import {
   DatePicker,
   Radio,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  MessageBox
 } from 'element-ui'
 
 Vue.use(Button)
@@ -26,3 +27,4 @@ Vue.use(Checkbox)
 Vue.use(CheckboxGroup)
 
 Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm

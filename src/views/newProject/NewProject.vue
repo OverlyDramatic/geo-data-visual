@@ -48,7 +48,7 @@
       <el-form-item label="项目简介">
         <el-input
           type="textarea"
-          :rows="2"
+          :rows="4"
           placeholder="请输入内容"
           v-model="formData.description">
         </el-input>
@@ -56,7 +56,7 @@
       <!-- TODO 按钮 -->
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
-        <el-button @click="$router.back()">取消</el-button>
+        <el-button @click="onCancel">取消</el-button>
       </el-form-item>
     </el-form>
     <!-- 地图组件 -->
@@ -129,7 +129,22 @@ export default {
       getDistrict(param)
     },
     onSubmit() {
-      console.log('hello?')
+      console.log('submit', this.formData)
+    },
+    onCancel() {
+      this.$confirm('确认取消新增当前项目？', '取消', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.$router.push({
+            name: 'home'
+          })
+        })
+        .catch(() => {
+          console.log('cancel')
+        })
     }
   },
   mounted() {
