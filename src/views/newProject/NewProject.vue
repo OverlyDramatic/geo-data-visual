@@ -129,7 +129,58 @@ export default {
       getDistrict(param)
     },
     onSubmit() {
-      console.log('submit', this.formData)
+      if (!this.formData.projectName) {
+        this.$message.error('请输入项目名称')
+        return
+      }
+      if (!this.formData.author) {
+        this.$message.error('请输入项目作者')
+        return
+      }
+      if (this.formData.dateRange.length !== 2) {
+        this.$message.error('请输入项目日期')
+        return
+      }
+      if (!this.formData.organization) {
+        this.$message.error('请输入项目单位')
+        return
+      }
+      if (!this.formData.address) {
+        this.$message.error('请输入项目地址')
+        return
+      }
+      if (!this.formData.detectMethod) {
+        this.$message.error('请选择探测方式')
+        return
+      }
+      if (!this.formData.detectObjects) {
+        this.$message.error('请选择探测目标')
+        return
+      }
+      if (!this.formData.description) {
+        this.$message.error('请输入项目简介')
+      }
+      // * 校验成功后创建工程文件，并跳转至工程概览页面
+      // 创建工程文件
+      const projectId = new Date().getTime()
+      const newProject = {
+        id: projectId.toString(),
+        info: {
+          basicInfo: this.formData
+        }
+      }
+      this.createNewP(newProject)
+        .then(res => {
+          // 跳转目录
+          this.$router.push({
+            name: 'projectGlance',
+            query: {
+              path: res.projectName
+            }
+          })
+        }, rej => {
+          console.error(rej)
+        })
     },
     onCancel() {
       this.$confirm('确认取消新增当前项目？', '取消', {
@@ -145,6 +196,36 @@ export default {
         .catch(() => {
           console.log('cancel')
         })
+    },
+    // * 新建工程
+    createNewP(newProject) {
+      const fs = require('fs')
+      const pathJoin = require('path').join
+      const baseUrl = require('process').cwd()
+
+      const projectPath = pathJoin(baseUrl, 'projects', `${newProject.info.basicInfo.projectName}_${newProject.id}`)
+
+      return new Promise(function(resolve, reject) {
+        fs.mkdir(projectPath, { recursive: true }, (err) => {
+          if (err) {
+            reject(new Error('创建工程失败！'))
+            throw err
+          }
+          // * 创建文件
+          const projectText = JSON.stringify(newProject)
+          const projectName = pathJoin(projectPath, `${newProject.info.basicInfo.projectName}.pjt`)
+          fs.writeFile(projectName, projectText, (err) => {
+            if (err) {
+              reject(new Error('创建工程失败！'))
+              throw err
+            } else {
+              resolve({
+                projectName
+              })
+            }
+          })
+        })
+      })
     }
   },
   mounted() {
