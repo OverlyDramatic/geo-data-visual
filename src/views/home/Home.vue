@@ -16,7 +16,7 @@
         <div>
           <!-- TODO 工程目录 -->
           <el-button class="home_btn" type="text" @click="openProjectsMenu">
-            <i class="el-icon-s-cooperation"></i>
+            <i class="el-icon-s-management"></i>
             工程目录
           </el-button>
         </div>
