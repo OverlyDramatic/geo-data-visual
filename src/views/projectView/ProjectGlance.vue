@@ -1,16 +1,92 @@
 <template>
   <div class="project-glance-wrap">
-    projectGlance.vue
-    {{ $route.query.path }}
-    <button @click="$router.back()">返回</button>
+    <el-container style="height: 100%; border: 1px solid #eee">
+      <el-header>
+        <el-page-header @back="$router.back()" >
+          <div slot="content">
+            <span v-text="fileData.info ? fileData.info.basicInfo.projectName + ' - ' + pageTitle: pageTitle"></span>
+            &nbsp;
+            <i class="el-icon-view"></i>
+          </div>
+        </el-page-header>
+      </el-header>
+      <el-container>
+        <el-aside width="200px">
+          <el-row class="tac" style="height: 100%">
+            <el-col
+              style="height: 100%">
+              <el-menu
+                default-active="1"
+                class="el-menu-vertical-demo"
+                @select="menuClick($event)">
+                <el-menu-item index="1">
+                  <i class="el-icon-menu"></i>
+                  <span slot="title">工程概览</span>
+                </el-menu-item>
+                <el-menu-item index="2">
+                  <i class="el-icon-document"></i>
+                  <span slot="title">反演数据</span>
+                </el-menu-item>
+                <el-menu-item index="3">
+                  <i class="el-icon-s-marketing"></i>
+                  <span slot="title">地图展示</span>
+                </el-menu-item>
+                <el-menu-item index="4">
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">项目设置</span>
+                </el-menu-item>
+              </el-menu>
+            </el-col>
+          </el-row>
+        </el-aside>
+        <el-main>
+          <glance
+            v-if="currentIndex === '1'"/>
+          <inversion
+            v-if="currentIndex === '2'"/>
+          <mapView
+            v-if="currentIndex === '3'"/>
+          <setting
+            v-if="currentIndex === '4'"/>
+        </el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 <script>
+import glance from './Glance'
+import inversion from './Inversion'
+import mapView from './MapView'
+import setting from './Setting'
+
 export default {
   name: 'ProjectGlance',
+  components: {
+    glance,
+    inversion,
+    mapView,
+    setting
+  },
   data() {
     return {
-      fileData: {}
+      fileData: {},
+      currentIndex: '1'
+    }
+  },
+  computed: {
+    pageTitle() {
+      switch (this.currentIndex) {
+        case '1':
+          return '工程概览'
+        case '2':
+          return '反演数据'
+        case '3':
+          return '地图展示'
+        case '4':
+          return '项目设置'
+        default:
+          return '工程概览'
+      }
     }
   },
   methods: {
@@ -49,6 +125,10 @@ export default {
           if (err) throw err
         })
       })
+    },
+    // 点击菜单
+    menuClick(event) {
+      this.currentIndex = event
     }
   },
   mounted() {
@@ -63,5 +143,47 @@ export default {
 }
 </script>
 <style>
+.project-glance-wrap {
+  height: 700px;
+}
+.el-header, .el-footer {
+    color: #409EFF;
+    border: 1px solid #eee;
+    text-align: center;
+    line-height: 60px;
+    user-select: none;
+  }
 
+.el-aside {
+  text-align: center;
+  line-height: 200px;
+  height: 100%;
+}
+
+.el-main {
+  text-align: center;
+  line-height: 160px;
+}
+
+body > .el-container {
+  margin-bottom: 40px;
+}
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+  line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+  line-height: 320px;
+}
+
+.el-page-header {
+  height: 60px;
+  line-height: 60px;
+}
+
+.el-menu {
+  height: 100%;
+}
 </style>

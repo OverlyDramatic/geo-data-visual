@@ -15,7 +15,7 @@
         </div>
         <div>
           <!-- TODO 工程目录 -->
-          <el-button class="home_btn" type="text" @click="openProjectsMenu">
+          <el-button class="home_btn" type="text" @click="openprojectMenu">
             <i class="el-icon-s-management"></i>
             工程目录
           </el-button>
@@ -81,9 +81,9 @@ export default {
       })
     },
     // 打开工程目录
-    openProjectsMenu() {
+    openprojectMenu() {
       this.$router.push({
-        name: 'projectsMenu'
+        name: 'projectMenu'
       })
     },
     // 打开工程

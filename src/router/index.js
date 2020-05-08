@@ -17,7 +17,12 @@ const routes = [
   {
     path: '/projectGlance',
     name: 'projectGlance',
-    component: () => import(/* webpackChunkName: "newProject" */ '../views/projectView/ProjectGlance.vue')
+    component: () => import(/* webpackChunkName: "projectGlance" */ '../views/projectView/ProjectGlance.vue')
+  },
+  {
+    path: '/projectMenu',
+    name: 'projectMenu',
+    component: () => import(/* webpackChunkName: "projectMenu" */ '../views/projectMenu/ProjectMenu.vue')
   }
 ]
 
