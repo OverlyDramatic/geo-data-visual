@@ -159,6 +159,7 @@ export default {
       }
       if (!this.formData.description) {
         this.$message.error('请输入项目简介')
+        return
       }
       // * 校验成功后创建工程文件，并跳转至工程概览页面
       // 创建工程文件
