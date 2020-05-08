@@ -25,12 +25,37 @@ export default {
           resolve(JSON.parse(data.toString()))
         })
       })
+    },
+    // 更新打开日志
+    updateRecentLog(fileData) {
+      const fs = require('fs')
+      const logUrl = localStorage.getItem('logUrl')
+      fs.readFile(logUrl, (err, data) => {
+        if (err) throw err
+        let log = JSON.parse(data.toString())
+        const recentId = fileData.id
+        // 检测log中是否存在当前文件
+        for (let i in log) {
+          if (log[i].id === recentId) {
+            log.splice(i, 1)
+          }
+        }
+        log.unshift({
+          name: fileData.info.basicInfo.projectName,
+          path: this.$route.query.path,
+          id: fileData.id
+        })
+        fs.writeFile(logUrl, JSON.stringify(log), (err) => {
+          if (err) throw err
+        })
+      })
     }
   },
   mounted() {
     this.readTheFile(this.$route.query.path)
       .then(res => {
         this.fileData = res
+        this.updateRecentLog(res)
       }, rej => {
         console.error(rej)
       })

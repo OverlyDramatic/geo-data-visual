@@ -1,5 +1,3 @@
-import { getSuffix } from './common.js'
-
 const suffixRef = {
   'image/jpg': ['jpg'],
   'image/jpeg': ['jpeg'],
@@ -16,9 +14,6 @@ function initAndOpen(config, res) {
   // 创建上传图片DOM
   inputFile.type = 'file'
   inputFile.name = 'file_upload'
-  if (config.formatLimit) {
-    inputFile.accept = config.formatLimit
-  }
   inputFile.onchange = onFileChange.bind(this, config, inputFile, res)
   // 打开上传
   inputFile.click()
@@ -35,13 +30,7 @@ function onFileChange(config, inputFile, res) {
       }
     }
   }
-  if (sufList.indexOf(getSuffix(inputFile.files[0].name)) === -1) {
-    res.reject({
-      type: 'formatError',
-      message: `上传文件格式不符合要求`
-    })
-  }
-  res.resolve(inputFile.files[0])
+  res.resolve(inputFile.files[0].path)
 }
 
 export function fileUpload(config) {

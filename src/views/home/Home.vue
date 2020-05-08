@@ -14,22 +14,29 @@
           </el-button>
         </div>
         <div>
+          <!-- TODO 工程目录 -->
+          <el-button class="home_btn" type="text" @click="openProjectsMenu">
+            <i class="el-icon-s-cooperation"></i>
+            工程目录
+          </el-button>
+        </div>
+        <div>
           <!-- TODO 打开工程 -->
           <el-button class="home_btn" type="text" @click="openFile">
             <i class="el-icon-s-order"></i>
             打开工程
           </el-button>
-          <div v-if="testRecentData.length">
+          <div v-if="recentData.length">
             <!-- TODO 最近打开 -->
             <el-divider>最近打开</el-divider>
             <ul class="recent_list">
               <li
                 class="recent_list_item"
-                v-for="item in testRecentData.filter((item, index) => {
+                v-for="item in recentData.filter((item, index) => {
                   return index < 3
                 })"
                 :key="item.id"
-              >
+                @click="openProject(item.path)">
                 <span class="recent_open_name" v-text="item.name"></span>
                 <span class="recent_open_path" v-text="item.path"></span>
               </li>
@@ -52,27 +59,13 @@
 </template>
 
 <script>
+import { initRecentProjectLog } from '../../components/js/recentProjects'
+
 export default {
   name: 'home',
   data() {
     return {
-      testRecentData: [
-        {
-          name: '工程1',
-          path: 'D:/Code/geo-data-visual',
-          id: '121'
-        },
-        {
-          name: '工程2',
-          path: 'D:/Code/geo-data-visual',
-          id: '122'
-        },
-        {
-          name: '工程3',
-          path: 'D:/Code/geo-data-visual/src/components',
-          id: '123'
-        }
-      ]
+      recentData: []
     }
   },
   methods: {
@@ -87,6 +80,12 @@ export default {
         name: 'newProject'
       })
     },
+    // 打开工程目录
+    openProjectsMenu() {
+      this.$router.push({
+        name: 'projectsMenu'
+      })
+    },
     // 打开工程
     openFile() {
       const { fileUpload } = require('../../components/js/upload.js')
@@ -95,7 +94,8 @@ export default {
       }).then(
         res => {
           // 读取成功
-          this.openSuccess(res)
+          // 打开工程成功后跳转工程详情页面
+          this.openProject(res)
         },
         // 失败报错
         rej => {
@@ -103,18 +103,17 @@ export default {
         }
       )
     },
-    // 打开工程成功后跳转工程详情页面
-    openSuccess(file) {
-      this.$message.success(`打开 ${file.name}工程`)
-      let reader = new FileReader()
-      reader.onload = e => {
-        console.log(e.target.result)
-      }
-      reader.readAsText(file)
-    },
     // 打开工程失败后提示错误信息
     openFail(error) {
       this.$message.error(error.message)
+    },
+    openProject(path) {
+      this.$router.push({
+        name: 'projectGlance',
+        query: {
+          path
+        }
+      })
     }
   },
   mounted() {
@@ -127,6 +126,18 @@ export default {
       resolve: this.openSuccess,
       reject: this.openFail
     })
+    // 获取最近打开文件路径
+    initRecentProjectLog()
+      .then(res => {
+        // 打开最近文件
+        const fs = require('fs')
+        fs.readFile(res, (err, data) => {
+          if (err) throw err
+          this.recentData = JSON.parse(data.toString())
+        })
+      }, rej => {
+        console.error(rej)
+      })
   }
 }
 </script>

@@ -203,7 +203,7 @@ export default {
       const pathJoin = require('path').join
       const baseUrl = require('process').cwd()
 
-      const projectPath = pathJoin(baseUrl, 'projects', `${newProject.info.basicInfo.projectName}_${newProject.id}`)
+      const projectPath = pathJoin(baseUrl, 'data', 'projects', `${newProject.info.basicInfo.projectName}_${newProject.id}`)
 
       return new Promise(function(resolve, reject) {
         fs.mkdir(projectPath, { recursive: true }, (err) => {
