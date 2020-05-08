@@ -2,7 +2,7 @@
   <div class="project-glance-wrap">
     <el-container style="height: 100%; border: 1px solid #eee">
       <el-header>
-        <el-page-header @back="$router.back()" >
+        <el-page-header @back="$router.push({name: 'projectMenu'})" >
           <div slot="content">
             <span v-text="fileData.info ? fileData.info.basicInfo.projectName + ' - ' + pageTitle: pageTitle"></span>
             &nbsp;
@@ -47,6 +47,7 @@
           <mapView
             v-if="currentIndex === '3'"/>
           <setting
+          :basicData="fileData.info.basicInfo"
             v-if="currentIndex === '4'"/>
         </el-main>
       </el-container>
@@ -119,7 +120,8 @@ export default {
         log.unshift({
           name: fileData.info.basicInfo.projectName,
           path: this.$route.query.path,
-          id: fileData.id
+          id: fileData.id,
+          basicInfo: fileData.info.basicInfo
         })
         fs.writeFile(logUrl, JSON.stringify(log), (err) => {
           if (err) throw err
@@ -143,9 +145,6 @@ export default {
 }
 </script>
 <style>
-.project-glance-wrap {
-  height: 700px;
-}
 .el-header, .el-footer {
     color: #409EFF;
     border: 1px solid #eee;
@@ -157,12 +156,11 @@ export default {
 .el-aside {
   text-align: center;
   line-height: 200px;
-  height: 100%;
 }
 
 .el-main {
   text-align: center;
-  line-height: 160px;
+  /* line-height: 160px; */
 }
 
 body > .el-container {
@@ -181,9 +179,5 @@ body > .el-container {
 .el-page-header {
   height: 60px;
   line-height: 60px;
-}
-
-.el-menu {
-  height: 100%;
 }
 </style>

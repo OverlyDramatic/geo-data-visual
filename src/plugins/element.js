@@ -22,7 +22,12 @@ import {
   Menu,
   Submenu,
   MenuItem,
-  MenuItemGroup
+  MenuItemGroup,
+  card,
+  Tabs,
+  TabPane,
+  Table,
+  TableColumn
 } from 'element-ui'
 
 Vue.use(Button)
@@ -47,6 +52,11 @@ Vue.use(Menu)
 Vue.use(Submenu)
 Vue.use(MenuItem)
 Vue.use(MenuItemGroup)
+Vue.use(card)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Table)
+Vue.use(TableColumn)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
