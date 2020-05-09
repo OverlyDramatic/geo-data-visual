@@ -41,13 +41,14 @@
         </el-aside>
         <el-main>
           <glance
-            v-if="currentIndex === '1'"/>
+            v-if="currentIndex === '1'"
+            :glanceData="fileData.info"/>
           <inversion
             v-if="currentIndex === '2'"/>
           <mapView
             v-if="currentIndex === '3'"/>
           <setting
-          :basicData="fileData.info.basicInfo"
+            :basicData="fileData.info.basicInfo"
             v-if="currentIndex === '4'"/>
         </el-main>
       </el-container>

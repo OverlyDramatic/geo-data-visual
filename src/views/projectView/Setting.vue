@@ -27,7 +27,7 @@
           </el-form-item>
           <!-- TODO 请输入项目地址 -->
           <el-form-item label="项目地址">
-            <el-input v-model="basicData.address" prefix-icon="el-icon-s-home"></el-input>
+            <el-input v-model="basicData.address" prefix-icon="el-icon-position"></el-input>
           </el-form-item>
           <!-- TODO 探测方式 单选 航空、地面 -->
           <el-form-item label="探测方式">
