@@ -21,7 +21,7 @@
                 @select="menuClick($event)">
                 <el-menu-item index="1">
                   <i class="el-icon-menu"></i>
-                  <span slot="title">工程概览</span>
+                  <span slot="title">项目概览</span>
                 </el-menu-item>
                 <el-menu-item index="2">
                   <i class="el-icon-document"></i>
@@ -78,7 +78,7 @@ export default {
     pageTitle() {
       switch (this.currentIndex) {
         case '1':
-          return '工程概览'
+          return '项目概览'
         case '2':
           return '反演数据'
         case '3':
@@ -86,7 +86,7 @@ export default {
         case '4':
           return '项目设置'
         default:
-          return '工程概览'
+          return '项目概览'
       }
     }
   },

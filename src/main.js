@@ -6,6 +6,7 @@ import './assets/css/basic.css'
 import './plugins/element.js'
 import './plugins/aMap.js'
 import './plugins/axios'
+import './plugins/echarts'
 
 Vue.config.productionTip = false
 

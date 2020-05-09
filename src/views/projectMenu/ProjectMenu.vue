@@ -136,7 +136,7 @@
               <template slot-scope="scope">
                 <el-button
                   size="mini"
-                  @click="handleEdit(scope.row.path)">编辑</el-button>
+                  @click="handleEdit(scope.row.path)">打开</el-button>
                 <el-button
                   size="mini"
                   type="danger"
