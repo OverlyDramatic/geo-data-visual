@@ -110,7 +110,7 @@
           <ul>
             <li
               class="setting-li clearfix"
-              v-for="(item, index) in data.inversion"
+              v-for="(item, index) in data.map"
               :key="index + item.path"
             >
               <span style="padding-right: 50px; float: left;">
@@ -158,29 +158,29 @@ export default {
       data: {
         inversion: [
           {
-            name: '空地反演结果',
+            name: '空地1反演结果',
             path: 'abc/bcd.csv'
           },
           {
-            name: '低速测量反演结果',
+            name: '空地2反演结果',
             path: 'abc/edf.csv'
           },
           {
-            name: '操场反演结果',
+            name: '空地3反演结果',
             path: 'abc/fdas.csv'
           }
         ],
         map: [
           {
-            name: '空地地图数据',
+            name: '空地1地图数据',
             path: 'abc/bcd.txt'
           },
           {
-            name: '低速测量地图数据',
+            name: '空地2地图数据',
             path: 'abc/edf.txt'
           },
           {
-            name: '操场地图数据',
+            name: '空地3地图数据',
             path: 'abc/fdas.txt'
           }
         ]

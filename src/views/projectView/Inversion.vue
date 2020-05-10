@@ -53,7 +53,7 @@ export default {
           },
           results: [
             {
-              name: '空地反演结果',
+              name: '空地1地图数据',
               path: 'abc/bcd.csv',
               id: '123',
               basicInfo: {
@@ -148,7 +148,7 @@ export default {
               }
             },
             {
-              name: '低速测量反演结果',
+              name: '空地2地图数据',
               path: 'abc/edf.csv',
               id: '234',
               basicInfo: {
@@ -251,7 +251,7 @@ export default {
               }
             },
             {
-              name: '操场反演结果',
+              name: '空地3地图数据',
               path: 'abc/fdas.csv',
               id: '4315',
               basicInfo: {
@@ -321,21 +321,6 @@ export default {
           trigger: 'item',
           formatter: function(params) {
             return '深度 : ' + params.value[2]
-          }
-        },
-        emphasis: {
-          itemStyle: {
-            borderColor: '#909399',
-            borderWidth: 1
-          }
-        },
-        legend: {
-          orient: 'vertical',
-          top: 'bottom',
-          left: 'right',
-          data: ['depth'],
-          textStyle: {
-            color: '#fff'
           }
         },
         series: {

@@ -15,9 +15,30 @@
           <span class="inversion-label">
             <i class="el-icon-s-grid"></i>测量区域总面积
           </span>
-          <span class="inversion-content">2316 m <sup>2</sup></span>
+          <span class="inversion-content">
+            2316 m
+            <sup>2</sup>
+          </span>
         </div>
       </div>
+      <el-divider></el-divider>
+      <ul class="mapList">
+        <li
+          v-for="(item, index) in area"
+          :key="index + item.name">
+          <div class="map-title">
+            <i class="el-icon-s-flag"></i>{{item.name}}
+          </div>
+          <span class="map-label">
+            <i class="el-icon-menu"></i>
+            测量区域面积
+          </span>
+          <span class="map-content">
+            {{ item.area }}m
+            <sup>2</sup>
+          </span>
+        </li>
+      </ul>
       <el-divider></el-divider>
       <!-- 地图组件 -->
       <el-amap
@@ -32,7 +53,7 @@
       >
         <el-amap-polygon
           v-for="(polygon, index) in data.polygons"
-          :key="index"
+          :key="index + '_' + index"
           :vid="index"
           :ref="`polygon_${index}`"
           :path="polygon.path"
@@ -40,6 +61,14 @@
           :events="polygon.events"
           :fillOpacity="1"
         ></el-amap-polygon>
+        <el-amap-text
+          v-for="(text, index) in data.texts"
+          :key="text + '=' + index"
+          :text="text.text"
+          :offset="text.offset"
+          :position="text.position"
+          :events="text.events"
+        ></el-amap-text>
       </el-amap>
     </el-card>
   </div>
@@ -55,7 +84,7 @@ export default {
       type: Object,
       default() {
         return {
-          center: [104.1542, 30.685031],
+          center: [104.154128, 30.685465],
           polygons: [
             {
               draggable: false,
@@ -67,7 +96,7 @@ export default {
               ],
               events: {
                 click: () => {
-                  console.log(this.$refs.map)
+                  console.log(this.$refs.map.$$getCenter())
                 }
               }
             },
@@ -81,7 +110,7 @@ export default {
               ],
               events: {
                 click: () => {
-                  console.log(this.$refs.map.$$getInstance())
+                  console.log(this.$refs.map.$$getCenter())
                 }
               }
             },
@@ -95,7 +124,39 @@ export default {
               ],
               events: {
                 click: () => {
-                  console.log(this.$refs.map.$$getInstance())
+                  console.log(this.$refs.map.$$getCenter())
+                }
+              }
+            }
+          ],
+          texts: [
+            {
+              position: [104.154256, 30.685681],
+              text: '1',
+              offset: [0, 0],
+              events: {
+                click: () => {
+                  alert('click text')
+                }
+              }
+            },
+            {
+              position: [104.154278, 30.685312],
+              text: '2',
+              offset: [0, 0],
+              events: {
+                click: () => {
+                  alert('click text')
+                }
+              }
+            },
+            {
+              position: [104.154283, 30.685087],
+              text: '3',
+              offset: [0, 0],
+              events: {
+                click: () => {
+                  alert('click text')
                 }
               }
             }
@@ -135,6 +196,20 @@ export default {
             }
           }
         }
+      ],
+      area: [
+        {
+          name: '空地1地图数据',
+          area: '1351'
+        },
+        {
+          name: '空地2地图数据',
+          area: '576'
+        },
+        {
+          name: '空地3地图数据',
+          area: '389'
+        }
       ]
     }
   }
@@ -142,6 +217,24 @@ export default {
 </script>
 <style>
 .amap-mapView.el-vue-amap-container {
-  height: 600px;
+  height: 400px;
+}
+.mapList {
+  list-style: none;
+  text-align: left;
+}
+.map-title {
+  color: #409eff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.map-label{
+  padding-left: 20px;
+}
+.map-label::after {
+  content: '：';
+}
+.map-content {
+  color: #e6a23c;
 }
 </style>
