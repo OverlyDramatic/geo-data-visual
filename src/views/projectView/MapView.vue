@@ -26,9 +26,7 @@
         <li
           v-for="(item, index) in area"
           :key="index + item.name">
-          <div class="map-title">
-            <i class="el-icon-s-flag"></i>{{item.name}}
-          </div>
+          <div class="map-title">{{(index+1) + ' ' + item.name}}</div>
           <span class="map-label">
             <i class="el-icon-menu"></i>
             测量区域面积
@@ -216,6 +214,9 @@ export default {
 }
 </script>
 <style>
+.mapView-wrap {
+  user-select: none;
+}
 .amap-mapView.el-vue-amap-container {
   height: 400px;
 }
