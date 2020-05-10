@@ -59,23 +59,9 @@
         <el-button @click="onCancel">取消</el-button>
       </el-form-item>
     </el-form>
-    <!-- 地图组件 -->
-    <el-amap
-      v-if="false"
-      ref="map"
-      vid="amapDemo"
-      :amap-manager="AmapManager"
-      :center="center"
-      :zoom="zoom"
-      :plugin="plugin"
-      :events="events"
-      class="amap-demo"
-    ></el-amap>
   </div>
 </template>
 <script>
-import { AmapManager } from 'vue-amap'
-
 export default {
   name: 'newProject',
   data() {
@@ -90,44 +76,14 @@ export default {
         detectMethod: '', // 探测方式 1-地面 2-航空
         detectObjects: [],
         description: '' // 项目描述
-      },
-      // 高德地图组件
-      AmapManager,
-      zoom: 12,
-      center: [121.59996, 31.197646],
-      events: {
-        init: o => {
-          console.log(o.getCenter())
-          console.log(this.$refs.map.$$getInstance())
-          o.getCity(result => {
-            console.log(result)
-          })
-        },
-        moveend: () => {},
-        zoomchange: () => {},
-        click: e => {
-          alert('map clicked')
-        }
-      },
-      plugin: [
-        'ToolBar',
-        {
-          pName: 'MapType',
-          defaultType: 0,
-          events: {
-            init(o) {
-              console.log(o)
-            }
-          }
-        }
-      ]
+      }
     }
   },
   methods: {
-    getDistrict(param) {
-      const { getDistrict } = require('../../api/district.js')
-      getDistrict(param)
-    },
+    // getDistrict(param) {
+    //   const { getDistrict } = require('../../api/district.js')
+    //   getDistrict(param)
+    // },
     onSubmit() {
       if (!this.formData.projectName) {
         this.$message.error('请输入项目名称')
@@ -228,16 +184,13 @@ export default {
         })
       })
     }
-  },
-  mounted() {
-    this.getDistrict()
   }
+  // mounted() {
+  //   this.getDistrict()
+  // }
 }
 </script>
 <style>
-.amap-demo.el-vue-amap-container {
-  height: 600px;
-}
 .el-form-item__content {
   width: 350px;
 }

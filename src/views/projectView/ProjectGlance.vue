@@ -6,7 +6,7 @@
           <div slot="content">
             <span v-text="fileData.info ? fileData.info.basicInfo.projectName + ' - ' + pageTitle: pageTitle"></span>
             &nbsp;
-            <i class="el-icon-view"></i>
+            <i class="el-icon-view" style="color: #909399;"></i>
           </div>
         </el-page-header>
       </el-header>
@@ -16,7 +16,7 @@
             <el-col
               style="height: 100%">
               <el-menu
-                default-active="1"
+                :default-active="currentIndex"
                 class="el-menu-vertical-demo"
                 @select="menuClick($event)">
                 <el-menu-item index="1">
@@ -42,7 +42,8 @@
         <el-main>
           <glance
             v-if="currentIndex === '1'"
-            :glanceData="fileData.info"/>
+            :glanceData="fileData.info"
+            @changeIndex="currentIndex = $event"/>
           <inversion
             v-if="currentIndex === '2'"/>
           <mapView

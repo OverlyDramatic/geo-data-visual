@@ -31,9 +31,15 @@
           </el-form-item>
           <!-- TODO 探测方式 单选 航空、地面 -->
           <el-form-item label="探测方式">
-            <el-radio v-model="basicData.detectMethod" label="1"><i class="el-icon-truck"></i>地面</el-radio>
-            <el-radio v-model="basicData.detectMethod" label="2"><i class="el-icon-s-promotion"></i>航空</el-radio>
-            <el-radio v-model="basicData.detectMethod" label="3"><i class="el-icon-ship"></i>水面</el-radio>
+            <el-radio v-model="basicData.detectMethod" label="1">
+              <i class="el-icon-truck"></i>地面
+            </el-radio>
+            <el-radio v-model="basicData.detectMethod" label="2">
+              <i class="el-icon-s-promotion"></i>航空
+            </el-radio>
+            <el-radio v-model="basicData.detectMethod" label="3">
+              <i class="el-icon-ship"></i>水面
+            </el-radio>
           </el-form-item>
           <!-- TODO 探测目标 多选 地雷、炮弹、简易爆炸装置、集束炸弹 -->
           <el-form-item label="探测目标">
@@ -47,12 +53,7 @@
           </el-form-item>
           <!-- TODO 请输入项目简介 -->
           <el-form-item label="项目简介">
-            <el-input
-              type="textarea"
-              :rows="4"
-              placeholder="请输入内容"
-              v-model="basicData.description">
-            </el-input>
+            <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="basicData.description"></el-input>
           </el-form-item>
           <!-- TODO 按钮 -->
           <el-form-item>
@@ -60,7 +61,74 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="修改数据" name="2">修改数据</el-tab-pane>
+      <el-tab-pane label="修改数据" name="2">
+        <el-card class="box-card">
+          <div slot="header" class="glance-basic-title">
+            <span>反演数据</span>
+            <el-button
+              style="float: right; padding: 3px 0"
+              type="text"
+              @click="$emit('changeIndex', '2')"
+            >
+              <i class="el-icon-download"></i>
+              导入
+            </el-button>
+          </div>
+          <ul>
+            <li
+              class="setting-li clearfix"
+              v-for="(item, index) in data.inversion"
+              :key="index + item.path"
+            >
+              <span style="padding-right: 50px; float: left;">
+                <span style="color: #409EFF;" v-text="`${index + 1} - `"></span>
+                {{item.name}}
+              </span>
+              <span style="float: right;">
+                <el-button size="mini" type="text" style="color: #E6A23C;">
+                  <i class="el-icon-edit"></i>修改
+                </el-button>
+                <el-button size="mini" type="text" style="color: #F56C6C;">
+                  <i class="el-icon-delete"></i>删除
+                </el-button>
+              </span>
+            </li>
+          </ul>
+        </el-card>
+        <el-card class="box-card">
+          <div slot="header" class="glance-basic-title">
+            <span>地图信息</span>
+            <el-button
+              style="float: right; padding: 3px 0"
+              type="text"
+              @click="$emit('changeIndex', '2')"
+            >
+              <i class="el-icon-download"></i>
+              导入
+            </el-button>
+          </div>
+          <ul>
+            <li
+              class="setting-li clearfix"
+              v-for="(item, index) in data.inversion"
+              :key="index + item.path"
+            >
+              <span style="padding-right: 50px; float: left;">
+                <span style="color: #409EFF;" v-text="`${index + 1} - `"></span>
+                {{item.name}}
+              </span>
+              <span style="float: right;">
+                <el-button size="mini" type="text" style="color: #E6A23C;">
+                  <i class="el-icon-edit"></i>修改
+                </el-button>
+                <el-button size="mini" type="text" style="color: #F56C6C;">
+                  <i class="el-icon-delete"></i>删除
+                </el-button>
+              </span>
+            </li>
+          </ul>
+        </el-card>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -70,7 +138,7 @@ export default {
   props: {
     basicData: {
       type: Object,
-      default () {
+      default() {
         return {
           projectName: '',
           author: '',
@@ -86,7 +154,37 @@ export default {
   },
   data() {
     return {
-      pageState: '1'
+      pageState: '1',
+      data: {
+        inversion: [
+          {
+            name: '空地反演结果',
+            path: 'abc/bcd.csv'
+          },
+          {
+            name: '低速测量反演结果',
+            path: 'abc/edf.csv'
+          },
+          {
+            name: '操场反演结果',
+            path: 'abc/fdas.csv'
+          }
+        ],
+        map: [
+          {
+            name: '空地地图数据',
+            path: 'abc/bcd.txt'
+          },
+          {
+            name: '低速测量地图数据',
+            path: 'abc/edf.txt'
+          },
+          {
+            name: '操场地图数据',
+            path: 'abc/fdas.txt'
+          }
+        ]
+      }
     }
   },
   methods: {
@@ -99,5 +197,10 @@ export default {
 <style>
 .setting-header {
   text-align: left;
+}
+.setting-li {
+  text-align: left;
+  color: #606266;
+  list-style: none;
 }
 </style>
