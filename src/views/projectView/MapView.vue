@@ -39,6 +39,7 @@
             v-for="(point, index) in item.mainPoint"
             :key="`single_point${index}`">
             <span class="map-label">
+              <i class="el-icon-full-screen"></i>
               主要反演结果坐标
             </span>
             <span
