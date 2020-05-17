@@ -35,6 +35,17 @@
             {{ item.area }}m
             <sup>2</sup>
           </span>
+          <div
+            v-for="(point, index) in item.mainPoint"
+            :key="`single_point${index}`">
+            <span class="map-label">
+              主要反演结果坐标
+            </span>
+            <span
+              class="map-content"
+              v-text="`N: ${point[1]}, E: ${point[0]}`">
+            </span>
+          </div>
         </li>
       </ul>
       <el-divider></el-divider>
@@ -67,6 +78,13 @@
           :position="text.position"
           :events="text.events"
         ></el-amap-text>
+        <el-amap-circle
+          v-for="(circle, index) in data.circles"
+          :key="`circle_${index}`"
+          :center="circle.center"
+          :radius="circle.radius"
+          :strokeColor="'#f00'"
+          :fill-opacity="circle.fillOpacity"></el-amap-circle>
       </el-amap>
     </el-card>
   </div>
@@ -158,6 +176,55 @@ export default {
                 }
               }
             }
+          ],
+          circles: [
+            {
+              center: [104.1540205, 30.685776],
+              radius: 1,
+              fillOpacity: 0.5
+            },
+            {
+              center: [104.1540315, 30.68579],
+              radius: 1,
+              fillOpacity: 0.5
+            },
+            {
+              center: [104.15406, 30.68579],
+              radius: 2,
+              fillOpacity: 0.5
+            },
+            {
+              center: [104.15408, 30.68579],
+              radius: 2,
+              fillOpacity: 0.5
+            },
+            // ---
+            {
+              center: [104.1540205, 30.685359],
+              radius: 2,
+              fillOpacity: 0.5
+            },
+            {
+              center: [104.1540211, 30.685379],
+              radius: 2,
+              fillOpacity: 0.5
+            },
+            {
+              center: [104.154131, 30.685379],
+              radius: 2,
+              fillOpacity: 0.5
+            },
+            {
+              center: [104.154151, 30.685379],
+              radius: 2,
+              fillOpacity: 0.5
+            },
+            // ---
+            {
+              center: [104.154139, 30.68515],
+              radius: 2,
+              fillOpacity: 0.5
+            }
           ]
         }
       }
@@ -198,15 +265,25 @@ export default {
       area: [
         {
           name: '空地1地图数据',
-          area: '1351'
+          area: '1351',
+          mainPoint: [
+            [104.15406, 30.68579]
+          ]
         },
         {
           name: '空地2地图数据',
-          area: '576'
+          area: '576',
+          mainPoint: [
+            [104.1540205, 30.685359],
+            [104.154181, 30.685379]
+          ]
         },
         {
           name: '空地3地图数据',
-          area: '389'
+          area: '389',
+          mainPoint: [
+            [104.154139, 30.68515]
+          ]
         }
       ]
     }
